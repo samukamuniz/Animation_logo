@@ -1,0 +1,167 @@
+to apagarchuva :xpos :ypos
+	setpencolor 3
+	if :xpos > 300 [stop]
+        pu
+        setpos(list :xpos :ypos)
+        pd
+        fd 10
+        apagarchuva :xpos+20 :ypos
+end
+
+to apagarparaqueda :xpos :ypos
+if :xpos > 455 [stop]
+pu
+home
+setpos ( list :xpos :ypos)
+setpc 3
+pd
+repeat 90 [fd 3 rt 2]
+rt 90
+fd 173
+rt 180
+repeat 3[fd 173 rt 120]
+pu
+setpos ( list :xpos+85 :ypos-181)
+pd repeat 360 [fd 0.3 lt 1]
+lt 90
+pu fd 3
+setfc 3 fill
+fd 200
+setfc 3 fill
+lt 180
+fd 190
+pd
+fd 40
+bk 30
+rt 40 
+repeat 3 [fd 25 bk 25]
+lt 80
+fd 25 bk 25
+rt 40
+fd 50
+rt 40
+fd 20
+bk 20
+lt 80
+fd 20
+bk 20
+pu
+home
+end
+
+to Base
+pu
+home
+setpos [-400 -300] rt 90
+pd fd 700
+lt 90
+fd 150
+lt 90
+fd 700
+lt 90
+fd 150
+lt 150 pu fd 20 
+setfc 8 fill
+end
+
+to CriaCeu
+home
+pu
+setpc 0
+setpos [-400 -150] rt 90
+pd
+fd 700
+lt 90
+fd 470
+lt 90
+fd 700
+lt 90
+fd 470
+lt 150
+pu
+fd 20
+setfc 3 fill
+end
+
+to criarchuva :xpos :ypos
+	setpencolor 1
+	if :xpos > 300 [stop]
+		pu
+		setpos(list :xpos :ypos)
+		pd
+		fd 10
+	    criarchuva :xpos+20 :ypos
+end
+
+to criarparaqueda :xpos :ypos
+if :xpos > 455 [stop]
+pu
+home
+setpos ( list :xpos :ypos)
+setpc 0
+pd
+repeat 90 [fd 3 rt 2]
+rt 90
+fd 173
+rt 180
+repeat 3[fd 173 rt 120]
+pu
+setpos ( list :xpos+85 :ypos-181)
+pd repeat 360 [fd 0.3 lt 1]
+lt 90
+pu fd 3
+setfc 0 fill
+fd 200
+setfc 2 fill
+lt 180
+fd 190
+pd
+fd 40
+bk 30
+rt 40 
+repeat 3 [fd 25 bk 25]
+lt 80
+fd 25 bk 25
+rt 40
+fd 50
+rt 40
+fd 20
+bk 20
+lt 80
+fd 20
+bk 20
+pu
+home
+end
+
+to Main
+hideturtle
+criaceu
+base
+moverparaqueda -380 220
+moverchuva -380 300
+moverApagarChuva -380 300
+end
+
+to moverApagarChuva :xpos :ypos
+    if :ypos < 0 [stop]
+        apagarchuva :xpos :ypos
+        wait 30
+        moverApagarChuva :xpos :ypos-20  
+end
+
+to moverchuva :xpos :ypos
+    if :ypos < 0 [stop]
+        criarchuva :xpos :ypos
+        wait 30
+        moverchuva :xpos :ypos-20
+end
+
+to moverparaqueda :xpos :ypos
+    if :xpos > 120 [stop]
+        criarparaqueda :xpos :ypos
+        wait 10
+	  apagarparaqueda :xpos :ypos
+        moverparaqueda :xpos+10 :ypos
+end
+
